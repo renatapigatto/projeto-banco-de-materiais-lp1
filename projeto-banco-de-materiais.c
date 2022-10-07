@@ -11,6 +11,8 @@ Code, Compile, Run and Debug online from anywhere in world.
 #include <ctype.h>
 #include <locale.h>
 #include <string.h>
+#include <unistd.h>
+
 
 int opMenu, exibirMenu, opInvalida;
 char limpaTela[5], pesquisa[100];
@@ -18,6 +20,7 @@ char limpaTela[5], pesquisa[100];
 void mostrarMenuInicial();
 void mostrarMenuPesquisa();
 void mostrarResultadoPesquisa();
+void mostrarCadastroMateriais();
 void mostrarMenuSair();
 
 void mostrarMenuInicial() {
@@ -53,7 +56,7 @@ void mostrarMenuInicial() {
                 break;
             case 2:
                 system(limpaTela);
-                printf("Cadastro de materiais indisponível!");
+                mostrarCadastroMateriais();
                 exibirMenu = 0;
                 break;
             case 3:
@@ -99,6 +102,7 @@ void mostrarResultadoPesquisa(){
     printf("\n\nRESULTADOS:");
     printf("\n\nwww.%s.com.br", pesquisa);
     
+    //transforma o conteúdo da variável em caracteres maiúsculos
     for(i = 0; pesquisa[i]!='\0'; i++){
         if(pesquisa[i] >= 'a' && pesquisa[i] <= 'z'){
             pesquisa[i] = pesquisa[i] -32;
@@ -123,6 +127,20 @@ void mostrarResultadoPesquisa(){
         system(limpaTela);
         mostrarResultadoPesquisa();
     }
+}
+
+void mostrarCadastroMateriais(){
+    printf("Cadastro de materias indisponível no momento.");
+    printf("\n\nVocê será redirecionado para a página inicial...");
+    sleep(1.5);
+    printf("\n.");
+    sleep(1.5);
+    printf("\n.");
+    sleep(1.5);
+    printf("\n.");
+    sleep(1.5);
+    system(limpaTela);
+    mostrarMenuInicial();
 }
 
 void mostrarMenuSair() {
