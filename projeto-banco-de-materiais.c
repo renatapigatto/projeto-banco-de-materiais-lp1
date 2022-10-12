@@ -1,18 +1,9 @@
-/******************************************************************************
-
-Welcome to GDB Online.
-GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
-C#, OCaml, VB, Perl, Swift, Prolog, Javascript, Pascal, HTML, CSS, JS
-Code, Compile, Run and Debug online from anywhere in world.
-
-*******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
 #include <string.h>
 #include <unistd.h>
-
 
 int opMenu, exibirMenu, opInvalida;
 char limpaTela[5], pesquisa[100];
@@ -21,6 +12,7 @@ void mostrarMenuInicial();
 void mostrarMenuPesquisa();
 void mostrarResultadoPesquisa();
 void mostrarCadastroMateriais();
+void scanPesquisa();
 void mostrarMenuSair();
 
 void mostrarMenuInicial() {
@@ -44,7 +36,7 @@ void mostrarMenuInicial() {
         }
 
         printf("\n#########################################");
-        printf("\n\nDigite a opção desejada: ");
+        printf("\nDigite a opção desejada: ");
         scanf("%d", &opMenu);
         getchar();
 
@@ -83,16 +75,8 @@ void mostrarMenuPesquisa() {
     printf("\n# Digite < para voltar                  #");
     printf("\n#########################################");
     printf("\nDigite sua busca: ");
-    scanf("%99s", pesquisa);
-    //limitar caracteres no scanf
-
-    if (pesquisa[0] == '<') {
-        system(limpaTela);
-        mostrarMenuInicial();
-    } else {
-        system(limpaTela);
-        mostrarResultadoPesquisa();
-    }
+    scanPesquisa();
+    //implementar lógica para limitar caracteres no scanf    
 }
 
 void mostrarResultadoPesquisa(){
@@ -118,27 +102,41 @@ void mostrarResultadoPesquisa(){
     printf("\n - Como usar %s?           v", pesquisa);
     printf("\n---------------------------------------------");
     printf("\n\nDigite uma nova busca ou < para voltar para o menu inicial: ");
-    scanf("%99s", pesquisa);
+    scanPesquisa();
+}
+
+//refatorado para evitar repetição nas telas de pesquisa
+void scanPesquisa() {
+    strncpy(pesquisa, "", sizeof(pesquisa)); //esvazia string pesquisa
     
+    scanf("%[^\n]", pesquisa);
+    getchar();
+
     if (pesquisa[0] == '<') {
         system(limpaTela);
         mostrarMenuInicial();
     } else {
         system(limpaTela);
-        mostrarResultadoPesquisa();
+        if (strlen(pesquisa) == 0) {
+            mostrarMenuPesquisa();
+        } else {
+            mostrarResultadoPesquisa();
+        }
     }
 }
 
 void mostrarCadastroMateriais(){
+    float t = 1.5; // add uma variável para facilitar futuramente caso mude o tempo de sleep()
+    
     printf("Cadastro de materias indisponível no momento.");
     printf("\n\nVocê será redirecionado para a página inicial...");
-    sleep(1.5);
+    sleep(t);
     printf("\n.");
-    sleep(1.5);
+    sleep(t);
     printf("\n.");
-    sleep(1.5);
+    sleep(t);
     printf("\n.");
-    sleep(1.5);
+    sleep(t);
     system(limpaTela);
     mostrarMenuInicial();
 }
